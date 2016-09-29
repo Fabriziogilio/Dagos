@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabri
+namespace Fabri;
 
 interface Tarjeta{
 	public function pagar(Transporte $transporte, $fecha_y_hora);

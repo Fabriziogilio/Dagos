@@ -1,5 +1,7 @@
 <?php
 
+namespace Fabri
+
 class MedioBoleto extends TarjetaMovi implements tarjeta{
 	function __construct(){
 		parent :: __construct();

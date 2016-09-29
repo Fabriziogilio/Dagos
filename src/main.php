@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabri
+namespace Fabri;
 
 include_once("tarjeta.php");
 include_once("transporte.php");

@@ -1,6 +1,6 @@
 <?php
 
-namespace Fabri
+namespace Fabri;
 
 abstract class Transporte{
 	protected $tipo, $numero;

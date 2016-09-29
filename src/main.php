@@ -1,4 +1,7 @@
 <?php
+
+namespace Fabri
+
 include_once("tarjeta.php");
 include_once("transporte.php");
 include_once("medio&pase.php");

@@ -1,5 +1,7 @@
 <?php
 
+namespace Fabri
+
 abstract class Transporte{
 	protected $tipo, $numero;
 	function returnTipo(){

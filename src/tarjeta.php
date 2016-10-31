@@ -1,94 +1,89 @@
 <?php
-
-namespace Fabri;
-
+namespace Poli\Tarjeta;
 interface Tarjeta{
 	public function pagar(Transporte $transporte, $fecha_y_hora);
 	public function recargar($monto);
 	public function saldo();
 	public function viajesRealizados();
 }
-
-class TarjetaMovi{
-	protected $credito, $historial, $i, $boletoColectivo, $boletoBici, $trasbordo;
-	function __construct(){
-		$this->credito = 0;
-		$this->historial = array();
-		$this->i = 0;
-		$this->boletoColectivo = 8.50;
-		$this->trasbordo = 2.80;
-		$this->boletoBici = 12.50;
-	}
-	function saldo(){
-		echo "Su saldo es de: $" . $this->credito . " pesos\n";
-	}
-	function recargar($monto){
-		if($monto == 272){
-			$this->credito += 320;
-		}
-		else if($monto == 320){
-			$this->credito += 500;
-		}
-		else{
-			$this->credito += $monto;
-		}
-	}
-	function pagar(Transporte $transporte, $date){ //historial [tipo, numero, monto, saldo, fecha]
-		if($transporte->returnTipo() == "Colectivo"){
-			if($this->i != 0 && ($this->historial[$this->i - 1][2] == $this->boletoColectivo || $this->historial[$this->i - 1][2] == $this->trasbordo) && ((strtotime($date) - strtotime($this->historial[$this->i - 1][4])) / 3600) < 1){
-				if($this->credito < $this->trasbordo){
-					echo "Credito insuficiente\n";
-				}
-				else{
-					$this->credito -= $this->trasbordo;
-					$this->agregarAlHistorial($transporte->returnTipo(),$transporte->numero(),$this->trasbordo,$this->credito, $date);
-				}
-			}
-			else{
-				if($this->credito < $this->boletoColectivo){
-					echo "Credito insuficiente\n";
-				}
-				else{
-					$this->credito -= $this->boletoColectivo;
-					$this->agregarAlHistorial($transporte->returnTipo(),$transporte->numero(),$this->boletoColectivo,$this->credito, $date);
-				}
-			}
-		}
-		if($transporte->returnTipo() == "Bicicleta"){
-			if($this->credito < $this->boletoBici){
-				echo "Credito insuficiente\n";
-			}
-			else{
-				$this->credito -= $this->boletoBici;
-				$this->agregarAlHistorial($transporte->returnTipo(),$transporte->numero(),$this->boletoBici,$this->credito, $date);
-			}	
-		}
-	}
-	protected function agregarAlHistorial($tipo,$numero,$monto, $saldoRestante,$date){
-		$this->historial[$this->i] = [$tipo,$numero,$monto, $saldoRestante, $date];
-		$this->i++;
-	}
-	function viajesRealizados(){
-		echo "Transporte\tNumero\t\tMonto\tSaldo\tFecha\n";
-		foreach($this->historial as $viaje){
-			if($viaje[0] == "Colectivo"){
-				echo $viaje[0];
-				echo "\t" . $viaje[1];
-				echo "\t$" . $viaje[2];
-				echo "\t$" . $viaje[3];
-				echo "\t" . $viaje[4] . "\n";
-			}
-			if($viaje[0] == "Bicicleta"){
-				echo $viaje[0];
-				echo "\t" . $viaje[1];
-				echo "\t\t$" . $viaje[2];
-				echo "\t$" . $viaje[3];
-				echo "\t" . $viaje[4] . "\n";
-			}
-
-		}
-		echo "\n";
-	}
-}
-
+class TarjetaMovi implements Tarjeta {
+  private $viajes = [];
+  private $saldo = 0;
+  protected $descuento;
+  public function __construct() {
+    $this->descuento = 1.0;
+  }
+  public function pagar(Transporte $transporte, $fecha_y_hora) {
+    if ($transporte->tipo() == "colectivo") {
+      return $this->pagarColectivo($transporte, $fecha_y_hora);
+    }
+    else if ($transporte->tipo() == "bici") {
+      if ($this->saldo < 12) return false; 
+      $this->viajes[] = new Viaje($transporte->tipo(), 12, $transporte, strtotime($fecha_y_hora));
+      $this->saldo -= 12;
+    }
+    return true;
+  }
+  protected function pagarColectivo(Transporte $transporte, $fecha_y_hora) {
+    $trasbordo = false;
+    if (count($this->viajes) > 0) {
+      if (strtotime($fecha_y_hora) - end($this->viajes)->tiempo() < 3600) {
+        $trasbordo = true;
+      }
+    }
+    $monto = 0;
+    if ($trasbordo) {
+      $monto = 2.0 * $this->descuento;
+    }
+    else {
+      $monto = 2.64 * $this->descuento;
+    }
+    if ($this->saldo < $monto) return false;
+    $this->viajes[] = new Viaje($transporte->tipo(), $monto, $transporte, strtotime($fecha_y_hora));
+    $this->saldo -= $monto;
+    return true;
+  }
+  public function recargar($monto) {
+    if ($monto == 272) {
+      $this->saldo += 320;
+    }
+    else if ($monto == 500) {
+      $this->saldo += 640;
+    }
+    else {
+      $this->saldo += $monto;
+    }
+  }
+  public function saldo() {
+    return $this->saldo;
+  }
+  public function viajesRealizados() {
+    return $this->viajes;
+  }
+	
+	
+	
+class Viaje {
+  private $tipo;
+  private $monto;
+  private $transporte;
+  private $tiempo;
+  public function __construct($tipo, $monto, $transporte, $tiempo) {
+    $this->tipo = $tipo;
+    $this->monto = $monto;
+    $this->transporte = $transporte;
+    $this->tiempo = $tiempo;
+  }
+  public function tipo() {
+    return $this->tipo;
+  }
+  public function monto() {
+    return $this->monto;
+  }
+  public function transporte() {
+    return $this->transporte;
+  }
+  public function tiempo() {
+    return $this->tiempo;
+  }
 ?>

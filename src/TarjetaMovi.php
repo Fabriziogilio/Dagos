@@ -58,4 +58,3 @@ class TarjetaMovi implements InterfaceTarjeta {
     return $this->viajes;
   }
 	
-?>

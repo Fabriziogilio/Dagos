@@ -1,12 +1,9 @@
 <?php
+
 namespace Poli\Tarjeta;
-interface Tarjeta{
-	public function pagar(Transporte $transporte, $fecha_y_hora);
-	public function recargar($monto);
-	public function saldo();
-	public function viajesRealizados();
-}
-class TarjetaMovi implements Tarjeta {
+
+
+class TarjetaMovi implements InterfaceTarjeta {
   private $viajes = [];
   private $saldo = 0;
   protected $descuento;
@@ -19,7 +16,7 @@ class TarjetaMovi implements Tarjeta {
     }
     else if ($transporte->tipo() == "bici") {
       if ($this->saldo < 12) return false; 
-      $this->viajes[] = new Viaje($transporte->tipo(), 12, $transporte, strtotime($fecha_y_hora));
+      $this->viajes[] = new Boleto($transporte->tipo(), 12, $transporte, strtotime($fecha_y_hora));
       $this->saldo -= 12;
     }
     return true;
@@ -39,7 +36,7 @@ class TarjetaMovi implements Tarjeta {
       $monto = 2.64 * $this->descuento;
     }
     if ($this->saldo < $monto) return false;
-    $this->viajes[] = new Viaje($transporte->tipo(), $monto, $transporte, strtotime($fecha_y_hora));
+    $this->viajes[] = new Boleto($transporte->tipo(), $monto, $transporte, strtotime($fecha_y_hora));
     $this->saldo -= $monto;
     return true;
   }
@@ -61,29 +58,4 @@ class TarjetaMovi implements Tarjeta {
     return $this->viajes;
   }
 	
-	
-	
-class Viaje {
-  private $tipo;
-  private $monto;
-  private $transporte;
-  private $tiempo;
-  public function __construct($tipo, $monto, $transporte, $tiempo) {
-    $this->tipo = $tipo;
-    $this->monto = $monto;
-    $this->transporte = $transporte;
-    $this->tiempo = $tiempo;
-  }
-  public function tipo() {
-    return $this->tipo;
-  }
-  public function monto() {
-    return $this->monto;
-  }
-  public function transporte() {
-    return $this->transporte;
-  }
-  public function tiempo() {
-    return $this->tiempo;
-  }
 ?>

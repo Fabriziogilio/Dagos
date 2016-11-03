@@ -57,5 +57,20 @@ class Test extends TestCase {
         $this->assertEquals($tarjeta->saldo(), 23, "No hubo trasbordo");
   }
   
+  public function testPagarViajeMedio() {
+        $tarjeta = new MedioBoleto();
+        $tarjeta->recargar(40);
+        $colectivo = new Colectivo("144 Negro", "Rosario Bus");
+        $tarjeta->pagar($colectivo, "2016/10/31 22:00");
+        $this->assertEquals($tarjeta->saldo(), 35.75, "Se descontó el pasaje");
+  }
+  
+  public function testPagarViajePase() {
+        $tarjeta = new MedioBoleto();
+        $tarjeta->recargar(40);
+        $colectivo = new Colectivo("144 Negro", "Rosario Bus");
+        $tarjeta->pagar($colectivo, "2016/10/31 22:00");
+        $this->assertEquals($tarjeta->saldo(), 40, "Se descontó el pasaje");
+  }
   
 }

@@ -28,12 +28,14 @@ class Test extends TestCase {
     $tarjeta->recargar(20);
     $colectivo = new Colectivo("144 Negro", "Rosario Bus");
     $tarjeta->pagar($colectivo, "2016/10/31 22:00");
-    $this->assertEquals($tarjeta->saldo(), 20 - 2.64, "Se descontó el pasaje");
+    $this->assertEquals($tarjeta->saldo(), (20 - 2.64), "Se descontó el pasaje");
   }
   
   public function testPagarViajeSinSaldo() {
     $tarjeta = new TarjetaMovi();
     $colectivo = new Colectivo("144 Negro", "Rosario Bus");
+    $tarjeta->pagar($colectivo, "2016/10/29 22:00");
+    $tarjeta->pagar($colectivo, "2016/10/30 22:00");
     $this->assertFalse($tarjeta->pagar($colectivo, "2016/10/31 22:00"), "No hay saldo suficiente");
   }
   

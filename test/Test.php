@@ -74,17 +74,22 @@ class Test extends TestCase {
   }
   
     public function testPagarBici() {
-    $tarjeta = new TarjetaMovi();
-    $tarjeta->recargar(40);
-    $bici = new Bici("1111");
-    $tarjeta->pagar($bici, "2016/10/31 22:00");
-    $this->assertEquals($tarjeta->saldo(), 28, "Se descontó el pasaje");
+      $tarjeta = new TarjetaMovi();
+      $tarjeta->recargar(40);
+      $bici = new Bici("1111");
+      $tarjeta->pagar($bici, "2016/10/31 22:00");
+      $this->assertEquals($tarjeta->saldo(), 28, "Se descontó el pasaje");
   }
   
     public function testPagarBiciSinSaldo() {
-    $tarjeta = new TarjetaMovi();
-    $bici = new Bici("1111");
-    $this->assertFalse($tarjeta->pagar($bici, "2016/10/31 22:00"), "No hay saldo suficiente");
+      $tarjeta = new TarjetaMovi();
+      $bici = new Bici("1111");
+      $this->assertFalse($tarjeta->pagar($bici, "2016/10/31 22:00"), "No hay saldo suficiente");
   }
+  
+    public function testNombreBondi(){
+      $colectivo = new Colectivo("144 Negro", "Rosario Bus");
+      $this->assertEquals($colectivo->nombre(), "144 Negro", "El nombre es correcto");
+    }
   
 }

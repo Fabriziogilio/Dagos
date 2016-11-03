@@ -5,10 +5,22 @@ use PHPUnit\Framework\TestCase;
 
 class Test extends TestCase {
   
-  public function testCargaSaldo() {
+  public function testCargaSaldo272() {
     $tarjeta = new TarjetaMovi();
     $tarjeta->recargar(272);
     $this->assertEquals($tarjeta->saldo(), 320, "Cuando cargo 272 deberia tener finalmente 320");
+  }
+  
+  public function testCargaSaldo500() {
+    $tarjeta = new TarjetaMovi();
+    $tarjeta->recargar(500);
+    $this->assertEquals($tarjeta->saldo(), 640, "Cuando cargo 500 deberia tener finalmente 640");
+  }
+  
+  public function testCargaSaldo() {
+    $tarjeta = new TarjetaMovi();
+    $tarjeta->recargar(100);
+    $this->assertEquals($tarjeta->saldo(), 100, "Cuando cargo 100 deberia tener finalmente 100");
   }
   
   public function testPagarViaje() {

@@ -83,7 +83,7 @@ class Test extends TestCase {
   
     public function testPagarBiciSinSaldo() {
     $tarjeta = new TarjetaMovi();
-    $bici = new Colectivo("1111");
+    $bici = new Bici("1111");
     $this->assertFalse($tarjeta->pagar($bici, "2016/10/31 22:00"), "No hay saldo suficiente");
   }
   

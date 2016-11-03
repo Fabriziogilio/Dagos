@@ -6,7 +6,7 @@ class Colectivo extends Transporte {
   private $linea;
   private $empresa;
   public function __construct($linea, $empresa) {
-    $this->tipo = "colectivo";
+    $this->tipo = "Colectivo";
     $this->linea = $linea;
     $this->empresa = $empresa;
   }

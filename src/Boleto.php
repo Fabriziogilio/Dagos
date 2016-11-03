@@ -26,3 +26,4 @@ class Boleto {
   public function tiempo() {
     return $this->tiempo;
   }
+}

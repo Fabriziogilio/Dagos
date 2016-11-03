@@ -66,7 +66,7 @@ class Test extends TestCase {
   }
   
   public function testPagarViajePase() {
-        $tarjeta = new MedioBoleto();
+        $tarjeta = new PaseLibre();
         $tarjeta->recargar(40);
         $colectivo = new Colectivo("144 Negro", "Rosario Bus");
         $tarjeta->pagar($colectivo, "2016/10/31 22:00");

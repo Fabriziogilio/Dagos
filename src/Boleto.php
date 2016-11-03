@@ -14,16 +14,4 @@ class Boleto {
     $this->transporte = $transporte;
     $this->tiempo = $tiempo;
   }
-  public function tipo() {
-    return $this->tipo;
-  }
-  public function monto() {
-    return $this->monto;
-  }
-  public function transporte() {
-    return $this->transporte;
-  }
-  public function tiempo() {
-    return $this->tiempo;
-  }
 }

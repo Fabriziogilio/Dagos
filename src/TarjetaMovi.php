@@ -28,7 +28,7 @@ class TarjetaMovi implements InterfaceTarjeta {
 	
   protected function pagarColectivo(Transporte $transporte, $fecha_y_hora) {
     $trasbordo = false;
-    if (count($this->viajes) > 0) {
+    if (count($this->viajesRealizados()) > 0) {
       if (strtotime($fecha_y_hora) - end($this->viajes)->tiempo() < 3600) {
         $trasbordo = true;
       }
@@ -71,6 +71,10 @@ class TarjetaMovi implements InterfaceTarjeta {
 	
   public function saldo() {
     return $this->saldo;
+  }
+	
+  public function viajesRealizados(){
+     return $this->viajes;
   }
 	
 }

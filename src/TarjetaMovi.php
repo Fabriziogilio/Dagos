@@ -35,10 +35,10 @@ class TarjetaMovi implements InterfaceTarjeta {
     }
     $monto = 0;
     if ($trasbordo) {
-      $monto = 2.0 * $this->descuento;
+      $monto = 2.64 * $this->descuento;
     }
     else {
-      $monto = 2.64 * $this->descuento;
+      $monto = 8.50 * $this->descuento;
     }
     if ($this->saldo < $monto){
 	    if ($this->plus < 2){

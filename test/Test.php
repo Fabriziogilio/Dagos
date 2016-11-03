@@ -25,10 +25,10 @@ class Test extends TestCase {
   
   public function testPagarViaje() {
     $tarjeta = new TarjetaMovi();
-    $tarjeta->recargar(20);
+    $tarjeta->recargar(40);
     $colectivo = new Colectivo("144 Negro", "Rosario Bus");
     $tarjeta->pagar($colectivo, "2016/10/31 22:00");
-    $this->assertEquals($tarjeta->saldo(), 17.36, "Se descontó el pasaje");
+    $this->assertEquals($tarjeta->saldo(), 31.50, "Se descontó el pasaje");
   }
   
   public function testPagarViajeSinSaldo() {
@@ -41,20 +41,20 @@ class Test extends TestCase {
   
   public function testTrasbordo() {
      $tarjeta = new TarjetaMovi();
-     $tarjeta->recargar(20);
+     $tarjeta->recargar(40);
      $colectivo = new Colectivo("144 Negro", "Rosario Bus");
      $tarjeta->pagar($colectivo, "2016/10/31 22:00");
      $tarjeta->pagar($colectivo, "2016/10/31 22:45");
-     $this->assertEquals($tarjeta->saldo(), 12.08, "Trasbordo");
+     $this->assertEquals($tarjeta->saldo(), 28.86, "Trasbordo");
   }
   
   public function testNoTransbordo() {
         $tarjeta = new TarjetaMovi();
-        $tarjeta->recargar(20);
+        $tarjeta->recargar(40);
         $colectivo = new Colectivo("144 Negro", "Rosario Bus");
         $tarjeta->pagar($colectivo, "2016/10/31 22:00");
         $tarjeta->pagar($colectivo, "2016/10/31 23:30");
-        $this->assertEquals($tarjeta->saldo(), 9.44, "No hubo trasbordo");
+        $this->assertEquals($tarjeta->saldo(), 23, "No hubo trasbordo");
   }
   
   

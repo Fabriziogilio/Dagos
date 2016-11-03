@@ -7,10 +7,11 @@ class TarjetaMovi implements InterfaceTarjeta {
   private $viajes = [];
   private $saldo = 0;
   protected $descuento;
-  private $plus = 0;
+  private $plus;
 	
   public function __construct() {
     $this->descuento = 1.0;
+    $this->plus = 0;
   }
 	
   public function pagar(Transporte $transporte, $fecha_y_hora) {
@@ -54,6 +55,9 @@ class TarjetaMovi implements InterfaceTarjeta {
   }
 	
   public function recargar($monto) {
+	 
+    $this->plus=0;
+	  
     if ($monto == 272) {
       $this->saldo += 320;
     }

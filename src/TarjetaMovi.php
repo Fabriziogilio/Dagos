@@ -73,8 +73,4 @@ class TarjetaMovi implements InterfaceTarjeta {
     return $this->saldo;
   }
 	
-  public function viajesRealizados() {
-    return $this->viajes;
-  }
-
 }

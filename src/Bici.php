@@ -11,3 +11,4 @@ class Bici extends Transporte {
   public function nombre() {
     return $this->numero;
   }
+}

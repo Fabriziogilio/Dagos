@@ -64,10 +64,13 @@ class TarjetaMovi implements InterfaceTarjeta {
       $this->saldo += $monto;
     }
   }
+	
   public function saldo() {
     return $this->saldo;
   }
+	
   public function viajesRealizados() {
     return $this->viajes;
   }
 	
+}

@@ -8,6 +8,6 @@ class Bici extends Transporte {
     $this->tipo = "Bicicleta";
     $this->numero = $numero;
   }
-  public function Nombre() {
+  public function nombre() {
     return $this->numero;
   }

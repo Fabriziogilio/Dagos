@@ -15,10 +15,10 @@ class TarjetaMovi implements InterfaceTarjeta {
   }
 	
   public function pagar(Transporte $transporte, $fecha_y_hora) {
-    if ($transporte->tipo() == "colectivo") {
+    if ($transporte->tipo() == "Colectivo") {
       return $this->pagarColectivo($transporte, $fecha_y_hora);
     }
-    else if ($transporte->tipo() == "bici") {
+    else if ($transporte->tipo() == "Bicicleta") {
       if ($this->saldo < 12) return false; 
       $this->viajes[] = new Boleto($transporte->tipo(), 12, $transporte->nombre(), strtotime($fecha_y_hora));
       $this->saldo -= 12;

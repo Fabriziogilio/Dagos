@@ -10,6 +10,6 @@ class Colectivo extends Transporte {
     $this->linea = $linea;
     $this->empresa = $empresa;
   }
-  public function Nombre() {
+  public function nombre() {
     return $this->linea;
   }

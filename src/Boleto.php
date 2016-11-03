@@ -17,12 +17,15 @@ class Boleto {
   }
   
   public function tipo(){
-    return $this-tipo;
+    return $this->tipo;
   }
   
   public function tiempo(){
-    return $this-tiempo;
+    return $this->tiempo;
   }
   
+  public function monto(){
+    return $this->monto;
+  }
   
 }

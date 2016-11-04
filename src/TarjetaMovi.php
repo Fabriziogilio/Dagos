@@ -4,14 +4,16 @@ namespace Poli\Tarjeta;
 
 
 class TarjetaMovi implements InterfaceTarjeta {
-  private $viajes = [];
-  private $saldo = 0;
+  protected $viajes = [];
+  protected $saldo = 0;
   protected $descuento;
-  private $plus;
+  protected $plus;
+  protected $tarj;
 	
   public function __construct() {
     $this->descuento = 1.0;
     $this->plus = 0;
+    $this->tarj= "Normal";
   }
 	
   public function pagar(Transporte $transporte, $fecha_y_hora) {
@@ -20,8 +22,8 @@ class TarjetaMovi implements InterfaceTarjeta {
     }
     else if ($transporte->tipo() == "Bicicleta") {
       if ($this->saldo < 12) return false; 
-      $this->viajes[] = new Boleto($transporte->tipo(), 12, $transporte->nombre(), strtotime($fecha_y_hora));
       $this->saldo -= 12;
+      $this->viajes[] = new Boleto($this->tarj(),$transporte->tipo(), 12, $transporte->nombre(), strtotime($fecha_y_hora),$this->saldo());
     }
     return true;
   }
@@ -49,8 +51,8 @@ class TarjetaMovi implements InterfaceTarjeta {
 		    return false;
 	    }
     }
-    $this->viajes[] = new Boleto($transporte->tipo(), $monto, $transporte, strtotime($fecha_y_hora));
     $this->saldo -= $monto;
+    $this->viajes[] = new Boleto($this->tarj(),$transporte->tipo(), $monto, $transporte, strtotime($fecha_y_hora),$this->saldo());
     return true;
   }
 	
@@ -75,6 +77,10 @@ class TarjetaMovi implements InterfaceTarjeta {
 	
   public function viajesRealizados(){
      return $this->viajes;
+  }
+	
+   public function tarj() {
+    return $this->tarj;
   }
 	
 }

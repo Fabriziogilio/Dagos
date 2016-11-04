@@ -8,12 +8,16 @@ class Boleto {
   private $monto;
   private $transporte;
   private $tiempo;
+  private $tarj;
+  private $saldo;
   
-  public function __construct($tipo, $monto, $transporte, $tiempo) {
+  public function __construct($tarj, $tipo, $monto, $transporte, $tiempo, $saldo) {
     $this->tipo = $tipo;
     $this->monto = $monto;
     $this->transporte = $transporte;
     $this->tiempo = $tiempo;
+    $this->tarj = $tarj;
+    $this->saldo= $saldo;
   }
   
   public function tiempo(){
